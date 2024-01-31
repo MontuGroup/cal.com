@@ -450,7 +450,7 @@ export default function Success(props: PageProps) {
                                 </span>
                                 <Badge variant="blue">{t("Host")}</Badge>
                               </div>
-                              <p className="text-default">{bookingInfo.user.email}</p>
+                              {/* Deleted email to hide Doctor/Nurse emails from success screen */}
                             </div>
                           )}
                           {bookingInfo?.attendees.map((attendee) => (

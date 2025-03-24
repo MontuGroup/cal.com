@@ -64,15 +64,26 @@ import { schemaQueryIdParseInt } from "~/lib/validations/shared/queryIdTransform
  *        description: User not found
  */
 async function handler(req: NextApiRequest) {
-  const { id, allRemainingBookings, cancellationReason } = schemaQueryIdParseInt
-    .merge(bookingCancelSchema.pick({ allRemainingBookings: true, cancellationReason: true }))
+  /**
+   *
+   * Note: Fix this parser, it is stripping out cancelledBy.
+   * Calcom didn't test the handler to see if the value was acutally passing in.
+   */
+  const { id, allRemainingBookings, cancellationReason, cancelledBy } = schemaQueryIdParseInt
+    .merge(
+      bookingCancelSchema.pick({
+        allRemainingBookings: true,
+        cancellationReason: true,
+        cancelledBy: true,
+      })
+    )
     .parse({
       ...req.query,
       allRemainingBookings: req.query.allRemainingBookings === "true",
     });
 
   // Normalizing for universal handler
-  req.body = { id, allRemainingBookings, cancellationReason };
+  req.body = { id, allRemainingBookings, cancellationReason, cancelledBy };
   return await handleCancelBooking(req);
 }
 

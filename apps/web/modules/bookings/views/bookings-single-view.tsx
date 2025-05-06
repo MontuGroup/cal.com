@@ -124,6 +124,8 @@ export default function Success(props: PageProps) {
   const isFeedbackMode = !!(noShow || rating);
   const tz = props.tz ? props.tz : isSuccessBookingPage && attendeeTimeZone ? attendeeTimeZone : timeZone();
 
+  const isInitialConsult = bookingInfo?.eventTypeId === 4;
+
   const location = bookingInfo.location as ReturnType<typeof getEventLocationValue>;
   let rescheduleLocation: string | undefined;
   if (
@@ -316,7 +318,10 @@ export default function Success(props: PageProps) {
     if (bookingInfo.user) {
       const isAttendee = bookingInfo.attendees.find((attendee) => attendee.email === session?.user?.email);
       const attendee = bookingInfo.attendees[0]?.name || bookingInfo.attendees[0]?.email || "Nameless";
-      const host = bookingInfo.user.name || bookingInfo.user.email;
+      const host = isInitialConsult
+        ? bookingInfo?.user?.name?.split(" ")[0] // Display only first name for Nurses
+        : bookingInfo.user.name || bookingInfo.user.email;
+
       if (isHost) {
         return t(`${titlePrefix}emailed_you_and_attendees${titleSuffix}`, {
           user: attendee,
@@ -562,7 +567,7 @@ export default function Success(props: PageProps) {
                                 <div className="mb-3">
                                   <div>
                                     <span data-testid="booking-host-name" className="mr-2">
-                                      {bookingInfo?.eventTypeId === 4
+                                      {isInitialConsult
                                         ? bookingInfo?.user?.name?.split(" ")[0] // Display only first name for Nurses
                                         : bookingInfo.user.name}
                                     </span>

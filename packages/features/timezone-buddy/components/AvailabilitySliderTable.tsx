@@ -234,10 +234,9 @@ export function AvailabilitySliderTable(props: { userTimeFormat: number | null; 
             table={table}
             tableContainerRef={tableContainerRef}
             onRowMouseclick={(row) => {
-              if (props.isOrg) {
-                setEditSheetOpen(true);
-                setSelectedUser(row.original);
-              }
+              // Calcom not considering self hosters again.  They removed the ability to edit schedules from this page.  This hopefully forced clinic to start using PMS for updating nurse schedules, maybe we leave it disabled?
+              setEditSheetOpen(true);
+              setSelectedUser(row.original);
             }}
             isPending={isPending}
             onScroll={(e) => fetchMoreOnBottomReached(e.target as HTMLDivElement)}>

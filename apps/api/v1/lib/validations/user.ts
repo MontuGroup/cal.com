@@ -134,6 +134,7 @@ const schemaUserCreateParams = z.object({
   locale: z.nativeEnum(locales).optional(),
   createdDate: iso8601.optional(),
   avatar: z.string().refine(isValidBase64Image).optional(),
+  completedOnboarding: z.boolean().optional().default(true), // Montu - we don't need user to go through onboarding, adds complexity when clinic use impersonation feature
 });
 
 // @note: These are the values that are editable via PATCH method on the user Model,

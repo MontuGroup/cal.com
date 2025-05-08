@@ -87,6 +87,7 @@ const schemaEventTypeCreateParams = z
     bookingFields: eventTypeBookingFields.optional(),
     scheduleId: z.number().optional(),
     parentId: z.number().optional(),
+    allowReschedulingPastBookings: z.boolean().optional().default(true), // Montu - enable this setting by default on new Doctor Event Types
   })
   .strict();
 

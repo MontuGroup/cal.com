@@ -44,7 +44,11 @@ export const bookingCancelSchema = z.object({
   cancelSubsequentBookings: z.boolean().optional(),
   cancellationReason: z.string().optional().default("Not Provided"),
   seatReferenceUid: z.string().optional(),
-  cancelledBy: z.string().email({ message: "Invalid email" }).optional(),
+  cancelledBy: z
+    .string()
+    .regex(/^[A-Za-z0-9+/=]*$/)
+    .max(200)
+    .optional(), // Montu - remove email validation for base64 usage
   internalNote: z
     .object({
       id: z.number(),

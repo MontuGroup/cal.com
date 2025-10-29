@@ -63,6 +63,7 @@ export const schemaEventTypeBaseBodyParams = EventType.pick({
   onlyShowFirstAvailableSlot: true,
   durationLimits: true,
   assignAllTeamMembers: true,
+  metadata: true, // Montu required -
 })
   .merge(
     z.object({

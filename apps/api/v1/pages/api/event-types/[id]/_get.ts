@@ -53,7 +53,7 @@ export async function getHandler(req: NextApiRequest) {
       customInputs: true,
       hashedLink: { select: { link: true } },
       team: { select: { slug: true } },
-      hosts: { select: { userId: true, isFixed: true } },
+      hosts: { select: { userId: true, isFixed: true, scheduleId: true } },
       owner: { select: { username: true, id: true } },
       children: { select: { id: true, userId: true } },
     },

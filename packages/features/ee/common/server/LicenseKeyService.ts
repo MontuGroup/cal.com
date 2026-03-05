@@ -71,19 +71,7 @@ class LicenseKeyService implements ILicenseKeyService {
   }
 
   async incrementUsage(usageEvent?: UsageEvent) {
-    try {
-      const response = await this.fetcher({
-        url: `${this.baseUrl}/v1/license/usage/increment?event=${usageEvent ?? UsageEvent.BOOKING}`,
-        options: {
-          method: "POST",
-          mode: "cors",
-        },
-      });
-      return await response.json();
-    } catch (error) {
-      console.error("Incrementing usage failed:", error);
-      throw error;
-    }
+    return Promise.resolve({ success: true });
   }
 
   async checkLicense(): Promise<boolean> {

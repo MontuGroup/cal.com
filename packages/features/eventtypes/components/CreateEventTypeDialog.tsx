@@ -1,5 +1,5 @@
 import type { EventType } from "@prisma/client";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 
@@ -30,7 +30,7 @@ const locationFormSchema = z.array(
     displayLocationPublicly: z.boolean().optional(),
     locationPhoneNumber: z
       .string()
-      .refine((val) => isValidPhoneNumber(val))
+      .refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false)
       .optional(),
     locationLink: z.string().url().optional(), // URL validates as new URL() - which requires HTTPS:// In the input field
   })

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import type { TFunction } from "next-i18next";
 // eslint-disable-next-line @calcom/eslint/deprecated-imports-next-router
 import { z } from "zod";
@@ -16,11 +16,11 @@ export const locationsResolver = (t: TFunction) => {
           link: z.string().url().optional(),
           phone: z
             .string()
-            .refine((val) => isValidPhoneNumber(val))
+            .refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false)
             .optional(),
           hostPhoneNumber: z
             .string()
-            .refine((val) => isValidPhoneNumber(val))
+            .refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false)
             .optional(),
           displayLocationPublicly: z.boolean().optional(),
           credentialId: z.number().optional(),

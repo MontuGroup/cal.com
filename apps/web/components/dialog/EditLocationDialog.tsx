@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch, useFormContext } from "react-hook-form";
 import { z } from "zod";
@@ -141,7 +141,7 @@ export const EditLocationDialog = (props: ISetLocationDialog) => {
       .nullable()
       .refine((val) => {
         if (val === null) return false;
-        return isValidPhoneNumber(val);
+        return parsePhoneNumberFromString(val)?.isValid() ?? false;
       })
       .optional(),
   });

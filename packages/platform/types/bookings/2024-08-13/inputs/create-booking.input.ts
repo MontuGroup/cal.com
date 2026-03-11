@@ -18,7 +18,7 @@ import {
   registerDecorator,
   Validate,
 } from "class-validator";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 import type { BookingLanguageType } from "./language";
 import { BookingLanguage } from "./language";
@@ -82,7 +82,7 @@ class Attendee {
     example: "+919876543210",
   })
   @IsOptional()
-  @Validate((value: string) => !value || isValidPhoneNumber(value), {
+  @Validate((value: string) => !value || (parsePhoneNumberFromString(value)?.isValid() ?? false), {
     message: "Invalid phone number format. Please use international format.",
   })
   phoneNumber?: string;

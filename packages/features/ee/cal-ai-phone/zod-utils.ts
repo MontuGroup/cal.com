@@ -1,11 +1,11 @@
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import z from "zod";
 
 export const templateTypeEnum = z.enum(["CHECK_IN_APPOINTMENT", "CUSTOM_TEMPLATE"]);
 
 const requiredFields = z.object({
-  yourPhoneNumber: z.string().refine((val) => isValidPhoneNumber(val)),
-  numberToCall: z.string().refine((val) => isValidPhoneNumber(val)),
+  yourPhoneNumber: z.string().refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false),
+  numberToCall: z.string().refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false),
   calApiKey: z.string().trim().min(1, {
     message: "Please enter CAL API Key",
   }),

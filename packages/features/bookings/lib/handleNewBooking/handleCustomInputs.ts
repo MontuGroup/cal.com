@@ -1,5 +1,5 @@
 import type { EventTypeCustomInput } from "@prisma/client";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import z from "zod";
 
 type CustomInput = {
@@ -41,7 +41,7 @@ function validatePhoneInput(value: string | boolean | undefined, errorMessage: s
   z.string({
     errorMap: () => ({ message: errorMessage }),
   })
-    .refine((val) => isValidPhoneNumber(val), {
+    .refine((val) => parsePhoneNumberFromString(val)?.isValid() ?? false, {
       message: "Phone number is invalid",
     })
     .parse(value);

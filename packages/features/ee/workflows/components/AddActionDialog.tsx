@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { isValidPhoneNumber } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -66,7 +66,7 @@ export const AddActionDialog = (props: IAddActionDialog) => {
     action: z.enum(WORKFLOW_ACTIONS),
     sendTo: z
       .string()
-      .refine((val) => isValidPhoneNumber(val) || val.includes("@"))
+      .refine((val) => (parsePhoneNumberFromString(val)?.isValid() ?? false) || val.includes("@"))
       .optional(),
     numberRequired: z.boolean().optional(),
     senderId: z

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { sdkActionManager } from "@calcom/embed-core/embed-iframe";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -6,6 +6,13 @@ import { useRefreshData } from "@calcom/lib/hooks/useRefreshData";
 import { collectPageParameters, telemetryEventTypes, useTelemetry } from "@calcom/lib/telemetry";
 import type { RecurringEvent } from "@calcom/types/Calendar";
 import { Button, Icon, Label, TextArea, Select } from "@calcom/ui";
+
+const cancellationReasonOptions = [
+  { label: "Schedule conflict", value: "Schedule conflict" },
+  { label: "Personal emergency", value: "Personal emergency" },
+  { label: "Work conflict", value: "Work conflict" },
+  { label: "Other", value: "Other" },
+];
 
 interface InternalNotePresetsSelectProps {
   internalNotePresets: { id: number; name: string }[];
@@ -114,15 +121,6 @@ export default function CancelBooking(props: Props) {
   const [error, setError] = useState<string | null>(booking ? null : t("booking_already_cancelled"));
   const [internalNote, setInternalNote] = useState<{ id: number; name: string } | null>(null);
 
-  const cancelBookingRef = useCallback((node: HTMLTextAreaElement) => {
-    if (node !== null) {
-      // eslint-disable-next-line @calcom/eslint/no-scroll-into-view-embed -- CancelBooking is not usually used in embed mode
-      node.scrollIntoView({ behavior: "smooth" });
-      node.focus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       {error && (
@@ -165,14 +163,11 @@ export default function CancelBooking(props: Props) {
 
           <Label>{props.isHost ? t("cancellation_reason_host") : t("cancellation_reason")}</Label>
 
-          <TextArea
+          <Select
             data-testid="cancel_reason"
-            ref={cancelBookingRef}
-            placeholder={t("cancellation_reason_placeholder")}
-            value={cancellationReason}
-            onChange={(e) => setCancellationReason(e.target.value)}
-            className="mb-4 mt-2 w-full "
-            rows={3}
+            options={cancellationReasonOptions}
+            onChange={(option) => setCancellationReason(option?.value ?? "")}
+            className="mb-4 mt-2 w-full"
           />
           {props.isHost ? (
             <div className="-mt-2 mb-4 flex items-center gap-2">
@@ -193,8 +188,8 @@ export default function CancelBooking(props: Props) {
               <Button
                 data-testid="confirm_cancel"
                 disabled={
-                  props.isHost &&
-                  (!cancellationReason || (props.internalNotePresets.length > 0 && !internalNote?.id))
+                  !cancellationReason ||
+                  (props.isHost && props.internalNotePresets.length > 0 && !internalNote?.id)
                 }
                 onClick={async () => {
                   setLoading(true);

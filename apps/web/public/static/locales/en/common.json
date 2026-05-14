@@ -1261,7 +1261,7 @@
   "dynamically_display_attendee_or_organizer": "Dynamically display the name of your attendee for you, or your name if it's viewed by your attendee",
   "event_location": "Event's location",
   "reschedule_optional": "Reason for rescheduling (optional)",
-  "reschedule_placeholder": "Let others know why you need to reschedule",
+  "reschedule_placeholder": "Why do you need to reschedule",
   "event_cancelled": "This event is canceled",
   "emailed_information_about_cancelled_event": "We sent an email to everyone to let them know.",
   "this_input_will_shown_booking_this_event": "This input will be shown when booking this event",

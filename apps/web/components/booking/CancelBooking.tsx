@@ -61,6 +61,8 @@ const InternalNotePresetsSelect = ({
         ]}
         onChange={handleSelectChange}
         placeholder={t("internal_booking_note")}
+        menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+        menuPosition="fixed"
       />
       {showOtherInput && (
         <TextArea
@@ -168,6 +170,8 @@ export default function CancelBooking(props: Props) {
             options={cancellationReasonOptions}
             onChange={(option) => setCancellationReason(option?.value ?? "")}
             className="mb-4 mt-2 w-full"
+            menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
+            menuPosition="fixed"
           />
           {props.isHost ? (
             <div className="-mt-2 mb-4 flex items-center gap-2">

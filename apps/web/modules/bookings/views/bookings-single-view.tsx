@@ -652,6 +652,8 @@ export default function Success(props: PageProps) {
                         {eventType.bookingFields.map((field) => {
                           if (!field) return null;
 
+                          if (field.hidden) return null;
+
                           if (!bookingInfo.responses[field.name]) return null;
 
                           const response = bookingInfo.responses[field.name];

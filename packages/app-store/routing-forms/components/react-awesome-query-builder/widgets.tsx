@@ -219,6 +219,7 @@ function SelectWidget({ listValues, setValue, value, ...remainingProps }: Select
       isDisabled={remainingProps.readOnly}
       value={optionFromList}
       options={selectItems}
+      menuPlacement="auto"
       {...remainingProps}
     />
   );

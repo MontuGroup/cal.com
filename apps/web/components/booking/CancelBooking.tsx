@@ -8,9 +8,17 @@ import type { RecurringEvent } from "@calcom/types/Calendar";
 import { Button, Icon, Label, TextArea, Select } from "@calcom/ui";
 
 const cancellationReasonOptions = [
-  { label: "Schedule conflict", value: "Schedule conflict" },
-  { label: "Personal emergency", value: "Personal emergency" },
-  { label: "Work conflict", value: "Work conflict" },
+  { label: "Can't afford the consultation fee", value: "Can't afford the consultation fee" },
+  { label: "Appointment time no longer suits", value: "Appointment time no longer suits" },
+  {
+    label: "Feeling better / no longer need the appointment",
+    value: "Feeling better / no longer need the appointment",
+  },
+  { label: "Switching to a different provider", value: "Switching to a different provider" },
+  {
+    label: "Treatment not working / considering alternatives",
+    value: "Treatment not working / considering alternatives",
+  },
   { label: "Other", value: "Other" },
 ];
 
@@ -61,7 +69,6 @@ const InternalNotePresetsSelect = ({
         ]}
         onChange={handleSelectChange}
         placeholder={t("internal_booking_note")}
-        menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
         menuPosition="fixed"
       />
       {showOtherInput && (
@@ -170,8 +177,7 @@ export default function CancelBooking(props: Props) {
             options={cancellationReasonOptions}
             onChange={(option) => setCancellationReason(option?.value ?? "")}
             className="mb-4 mt-2 w-full"
-            menuPortalTarget={typeof document !== "undefined" ? document.body : undefined}
-            menuPosition="fixed"
+            menuPlacement="auto"
           />
           {props.isHost ? (
             <div className="-mt-2 mb-4 flex items-center gap-2">
@@ -192,8 +198,8 @@ export default function CancelBooking(props: Props) {
               <Button
                 data-testid="confirm_cancel"
                 disabled={
-                  !cancellationReason ||
-                  (props.isHost && props.internalNotePresets.length > 0 && !internalNote?.id)
+                  props.isHost &&
+                  (!cancellationReason || (props.internalNotePresets.length > 0 && !internalNote?.id))
                 }
                 onClick={async () => {
                   setLoading(true);

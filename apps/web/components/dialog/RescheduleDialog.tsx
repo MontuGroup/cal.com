@@ -11,8 +11,8 @@ import {
   DialogFooter,
   DialogHeader,
   Icon,
-  Select,
   showToast,
+  TextArea,
 } from "@calcom/ui";
 
 interface IRescheduleDialog {
@@ -26,13 +26,6 @@ export const RescheduleDialog = (props: IRescheduleDialog) => {
   const utils = trpc.useUtils();
   const { isOpenDialog, setIsOpenDialog, bookingUId: bookingId } = props;
   const [rescheduleReason, setRescheduleReason] = useState("");
-
-  const rescheduleReasonOptions = [
-    { label: "Schedule conflict", value: "Schedule conflict" },
-    { label: "Personal emergency", value: "Personal emergency" },
-    { label: "Work conflict", value: "Work conflict" },
-    { label: t("other"), value: "Other" },
-  ];
 
   const { mutate: rescheduleApi, isPending } = trpc.viewer.bookings.requestReschedule.useMutation({
     async onSuccess() {
@@ -60,10 +53,11 @@ export const RescheduleDialog = (props: IRescheduleDialog) => {
               {t("reason_for_reschedule_request")}
               <span className="text-subtle font-normal"> (Optional)</span>
             </p>
-            <Select
+            <TextArea
               data-testid="reschedule_reason"
-              options={rescheduleReasonOptions}
-              onChange={(option) => setRescheduleReason(option?.value ?? "")}
+              name={t("reason_for_reschedule")}
+              value={rescheduleReason}
+              onChange={(e) => setRescheduleReason(e.target.value)}
               className="mb-5 sm:mb-6"
             />
 

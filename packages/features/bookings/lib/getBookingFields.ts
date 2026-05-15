@@ -279,9 +279,17 @@ export const ensureBookingInputsHaveSystemFields = ({
       defaultPlaceholder: "reschedule_placeholder",
       required: true,
       options: [
-        { label: "Schedule conflict", value: "Schedule conflict" },
-        { label: "Personal emergency", value: "Personal emergency" },
-        { label: "Work conflict", value: "Work conflict" },
+        {
+          label: "Scheduling conflict (work, family, etc.)",
+          value: "Scheduling conflict (work, family, etc.)",
+        },
+        { label: "Feeling unwell", value: "Feeling unwell" },
+        { label: "Appointment time no longer suits", value: "Appointment time no longer suits" },
+        {
+          label: "Waiting on documentation or test results",
+          value: "Waiting on documentation or test results",
+        },
+        { label: "Technical issues", value: "Technical issues" },
         { label: "Other", value: "Other" },
       ],
       views: [

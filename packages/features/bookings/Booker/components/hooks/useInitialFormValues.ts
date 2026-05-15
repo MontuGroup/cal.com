@@ -116,7 +116,8 @@ export function useInitialFormValues({
       const responses = eventType.bookingFields.reduce((responses, field) => {
         return {
           ...responses,
-          [field.name]: bookingData?.responses[field.name],
+          // Always start rescheduleReason empty so the user must actively choose
+          [field.name]: field.name === "rescheduleReason" ? undefined : bookingData?.responses[field.name],
         };
       }, {});
       defaults.responses = {

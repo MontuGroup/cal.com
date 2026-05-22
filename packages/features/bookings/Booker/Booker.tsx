@@ -8,7 +8,6 @@ import { shallow } from "zustand/shallow";
 import BookingPageTagManager from "@calcom/app-store/BookingPageTagManager";
 import { useIsPlatformBookerEmbed } from "@calcom/atoms/monorepo";
 import dayjs from "@calcom/dayjs";
-import useSkipConfirmStep from "@calcom/features/bookings/Booker/components/hooks/useSkipConfirmStep";
 import { getQueryParam } from "@calcom/features/bookings/Booker/utils/query-param";
 import { useNonEmptyScheduleDays } from "@calcom/features/schedules";
 import classNames from "@calcom/lib/classNames";
@@ -161,7 +160,7 @@ const BookerComponent = ({
     }
   };
 
-  const skipConfirmStep = useSkipConfirmStep(bookingForm, event?.data?.bookingFields);
+  const skipConfirmStep = false; // remove this, it has bugged logic.  causes form to jump back to timeslot picker
 
   // Cloudflare Turnstile Captcha
   const shouldRenderCaptcha = !!(

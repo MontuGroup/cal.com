@@ -273,11 +273,25 @@ export const ensureBookingInputsHaveSystemFields = ({
     },
     {
       defaultLabel: "reason_for_reschedule",
-      type: "textarea",
+      type: "select",
       editable: "system-but-optional",
       name: "rescheduleReason",
       defaultPlaceholder: "reschedule_placeholder",
-      required: false,
+      required: true,
+      options: [
+        {
+          label: "Scheduling conflict (work, family, etc.)",
+          value: "Scheduling conflict (work, family, etc.)",
+        },
+        { label: "Feeling unwell", value: "Feeling unwell" },
+        { label: "Appointment time no longer suits", value: "Appointment time no longer suits" },
+        {
+          label: "Waiting on documentation or test results",
+          value: "Waiting on documentation or test results",
+        },
+        { label: "Technical issues", value: "Technical issues" },
+        { label: "Other", value: "Other" },
+      ],
       views: [
         {
           id: "reschedule",

@@ -166,6 +166,10 @@ export const FormBuilder = function FormBuilder({
               return null;
             }
 
+            if (field.name === "rescheduleReason") {
+              return null;
+            }
+
             const fieldType = fieldTypesConfigMap[field.type];
             const isFieldEditableSystemButOptional = field.editable === "system-but-optional";
             const isFieldEditableSystemButHidden = field.editable === "system-but-hidden";

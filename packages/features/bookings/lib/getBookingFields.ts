@@ -379,11 +379,18 @@ export const ensureBookingInputsHaveSystemFields = ({
     if (existingBookingFieldIndex === -1) {
       missingSystemAfterFields.push(field);
     } else {
-      bookingFields[existingBookingFieldIndex] = {
+      const mergedField = {
         // Adding the fields from Code first and then fields from DB. Allows, the code to push new properties to the field
         ...field,
         ...bookingFields[existingBookingFieldIndex],
       };
+      // rescheduleReason must always render as the system-defined select dropdown regardless of event type overrides
+      if (field.name === "rescheduleReason") {
+        mergedField.required = true;
+        mergedField.type = field.type;
+        mergedField.options = field.options;
+      }
+      bookingFields[existingBookingFieldIndex] = mergedField;
     }
   }
 

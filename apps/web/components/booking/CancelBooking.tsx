@@ -178,6 +178,8 @@ export default function CancelBooking(props: Props) {
             onChange={(option) => setCancellationReason(option?.value ?? "")}
             className="mb-4 mt-2 w-full"
             menuPlacement="auto"
+            menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+            menuPosition="fixed"
           />
           {props.isHost ? (
             <div className="-mt-2 mb-4 flex items-center gap-2">

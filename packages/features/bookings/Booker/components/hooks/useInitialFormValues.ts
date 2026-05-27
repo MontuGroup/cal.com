@@ -125,7 +125,13 @@ export function useInitialFormValues({
         return {
           ...responses,
           // Always start rescheduleReason empty so the user must actively choose
-          [field.name]: field.name === "rescheduleReason" ? undefined : bookingData?.responses[field.name],
+          // For createdBy, prefer the URL param (passed through the reschedule redirect) over the stored response
+          [field.name]:
+            field.name === "rescheduleReason"
+              ? undefined
+              : field.name === "createdBy"
+              ? parsedQuery[field.name] ?? bookingData?.responses[field.name]
+              : bookingData?.responses[field.name],
         };
       }, {});
       defaults.responses = {

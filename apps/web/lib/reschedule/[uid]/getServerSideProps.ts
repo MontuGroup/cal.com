@@ -16,6 +16,7 @@ const querySchema = z.object({
   uid: z.string(),
   seatReferenceUid: z.string().optional(),
   rescheduledBy: z.string().optional(),
+  createdBy: z.string().optional(),
   allowRescheduleForCancelledBooking: z
     .string()
     .transform((value) => value === "true")
@@ -29,6 +30,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     uid: bookingUid,
     seatReferenceUid,
     rescheduledBy,
+    createdBy,
     /**
      * This is for the case of request-reschedule where the booking is cancelled
      */
@@ -190,6 +192,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
   if (currentUserEmail) {
     destinationUrlSearchParams.set("rescheduledBy", currentUserEmail);
+  }
+
+  if (createdBy) {
+    destinationUrlSearchParams.set("createdBy", createdBy);
   }
 
   return {

@@ -45,7 +45,15 @@ export function useInitialFormValues({
   useEffect(() => {
     (async function () {
       if (Object.keys(formValues).length) {
-        setDefaultValues(formValues);
+        // Always clear rescheduleReason when starting a reschedule so the user must make a fresh selection,
+        // even if a previous reschedule's value is still in the store.
+        const defaults = rescheduleUid
+          ? {
+              ...formValues,
+              responses: { ...(formValues.responses || {}), rescheduleReason: undefined },
+            }
+          : formValues;
+        setDefaultValues(defaults);
         return;
       }
 

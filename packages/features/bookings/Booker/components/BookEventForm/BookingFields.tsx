@@ -57,10 +57,9 @@ export const BookingFields = ({
         }
 
         if (field.name === SystemField.Enum.rescheduleReason) {
-          if (bookingData === null) {
-            return null;
-          }
-          // rescheduleReason is a reschedule specific field and thus should be editable during reschedule
+          // rescheduleReason is a reschedule-specific field — always show it during reschedule.
+          // The view filter above (fieldViews check) already ensures this only renders when rescheduleUid is set.
+          hidden = false;
           readOnly = false;
         }
 

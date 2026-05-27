@@ -384,11 +384,15 @@ export const ensureBookingInputsHaveSystemFields = ({
         ...field,
         ...bookingFields[existingBookingFieldIndex],
       };
-      // rescheduleReason must always render as the system-defined select dropdown regardless of event type overrides
+      // rescheduleReason must always render as the system-defined select dropdown regardless of event type overrides.
+      // views and hidden must also be forced so the validation schema sees it as required in reschedule view
+      // (views:[] or hidden:true from DB would make isFieldApplicableToCurrentView falsy, skipping required check).
       if (field.name === "rescheduleReason") {
         mergedField.required = true;
         mergedField.type = field.type;
         mergedField.options = field.options;
+        mergedField.views = field.views;
+        mergedField.hidden = false;
       }
       bookingFields[existingBookingFieldIndex] = mergedField;
     }
@@ -403,6 +407,5 @@ export const ensureBookingInputsHaveSystemFields = ({
         : null),
     };
   });
-
   return eventTypeBookingFields.brand<"HAS_SYSTEM_FIELDS">().parse(bookingFields);
 };

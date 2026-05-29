@@ -180,7 +180,15 @@ export default function CancelBooking(props: Props) {
             menuPlacement="auto"
             menuPortalTarget={typeof document !== "undefined" ? document.body : null}
             menuPosition="fixed"
+            styles={{
+              control: (base) => ({
+                ...base,
+                borderColor: !cancellationReason ? "#ef4444" : base.borderColor,
+                "&:hover": { borderColor: !cancellationReason ? "#ef4444" : base.borderColor },
+              }),
+            }}
           />
+          {!cancellationReason && <p className="-mt-3 mb-3 text-sm text-red-500">{t("required")}</p>}
           {props.isHost ? (
             <div className="-mt-2 mb-4 flex items-center gap-2">
               <Icon name="info" className="text-subtle h-4 w-4" />

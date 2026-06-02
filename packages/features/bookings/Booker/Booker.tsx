@@ -79,6 +79,7 @@ const BookerComponent = ({
   renderCaptcha,
   hashedLink,
 }: BookerProps & WrappedBookerProps) => {
+  hideBranding = true;
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const [bookerState, setBookerState] = useBookerStore((state) => [state.state, state.setState], shallow);

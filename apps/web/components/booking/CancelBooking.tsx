@@ -19,6 +19,7 @@ const cancellationReasonOptions = [
     label: "Treatment not working / considering alternatives",
     value: "Treatment not working / considering alternatives",
   },
+  { label: "Clinic cancellation", value: "Clinic cancellation" },
   { label: "Other", value: "Other" },
 ];
 

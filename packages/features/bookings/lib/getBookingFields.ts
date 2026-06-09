@@ -290,6 +290,7 @@ export const ensureBookingInputsHaveSystemFields = ({
           value: "Waiting on documentation or test results",
         },
         { label: "Technical issues", value: "Technical issues" },
+        { label: "Clinic reschedule", value: "Clinic reschedule" },
         { label: "Other", value: "Other" },
       ],
       views: [

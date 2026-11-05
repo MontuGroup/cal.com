@@ -89,6 +89,8 @@ const teamSchema = _TeamModel.pick({
 });
 
 export const schemaBookingReadPublic = Booking.extend({
+  cancelledBy: z.string().nullish(), // Montu - remove email validation for base64 usage
+  rescheduledBy: z.string().nullish(), // Montu - remove email validation for base64 usage
   eventType: _EventTypeModel
     .pick({
       title: true,
